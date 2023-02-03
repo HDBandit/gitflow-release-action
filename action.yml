@@ -1,0 +1,30 @@
+name: Gitflow release
+description: Release following Gitflow branching model
+author: Gerard Vico
+inputs:
+  command:
+    description: Supported commands are [start|finish]
+    required: true
+  tag:
+    description: A Git tag name.
+    required: true
+  message:
+    description: A message for the Git tag.
+    required: false
+  main_branch:
+    description: Branch storing the official release history
+    required: false
+    default: master
+  develop_branch:
+    description: Branch serving as an integration branch for features
+    required: false
+    default: develop
+
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.tag }}
+    - ${{ inputs.message }}
+    - ${{ inputs.main_branch }}
+    - ${{ inputs.develop_branch }}
