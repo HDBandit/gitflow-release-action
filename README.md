@@ -1,28 +1,25 @@
 # Gitflow release action
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+GitHub Action implementing the Gitflow release process. This GitHub Action needs a token with permissions to push to your main and develop branches.
+If you have configured Branch protections, you will need a token with permissions to bypass these protections.
 
 ## Inputs
 
 ## `command`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Required** Options are `start`, `finish` or `start_finish`.
 
 ## `tag`
 
-**Required** The name of the person to greet. Default `"World"`.
-
-## `message`
-
-**Required** The name of the person to greet. Default `"World"`.
+**Required** Label to use for releasing.
 
 ## `main_branch`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Optional** Branch name storing releases history. Default `master`.
 
 ## `develop_branch`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Optional** Branch name used to integrate feature branches. Default `develop`.
 
 ## Outputs
 
