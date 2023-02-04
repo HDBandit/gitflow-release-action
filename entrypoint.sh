@@ -23,7 +23,7 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   commits=$(git log --no-merges --format='%H' master...release/$tag | wc -l)
   echo "$commits commits included in the release/$tag"
 
-  if [[ $commits > 0 ] || $skip_empty_releases == "false" ]]; then
+  if [[ $commits > 0 || $skip_empty_releases == "false" ]]; then
     git config user.name github-actions
     git config user.email github-actions@github.com
     git checkout "$main_branch"
