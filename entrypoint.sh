@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 command=${INPUT_COMMAND}
 tag=${INPUT_TAG}
 main_branch=${INPUT_MAIN_BRANCH}
