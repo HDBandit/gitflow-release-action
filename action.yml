@@ -16,10 +16,10 @@ inputs:
     description: Branch serving as an integration branch for features
     required: false
     default: develop
-  skip_empty_releases:
-    description: Skip integrate releases with 0 commits ahead your main branch
+  allow_empty_releases:
+    description: Allow integrate releases with 0 commits ahead your main branch
     required: false
-    default: "true"
+    default: 'false'
 
 runs:
   using: docker

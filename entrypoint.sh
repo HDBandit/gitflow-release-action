@@ -4,7 +4,7 @@ command="$1"
 tag="$2"
 main_branch="$3"
 develop_branch="$4"
-skip_empty_releases="$5"
+allow_empty_releases="$5"
 
 check_execution_ok() {
   if [ $? -ne 0 ]
@@ -13,7 +13,7 @@ check_execution_ok() {
     fi
 }
 
-echo "Executing gitflow release command=$command, tag=$tag, main_branch=$main_branch, develop_branch=$develop_branch, skip_empty_releases=$skip_empty_releases"
+echo "Executing gitflow release command=$command, tag=$tag, main_branch=$main_branch, develop_branch=$develop_branch, allow_empty_releases=$allow_empty_releases"
 echo "Working directory is $(pwd)"
 
 if [ "$command" = start ] || [ "$command" = start_finish ]; then
@@ -35,7 +35,7 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   check_execution_ok
   echo "$commits commits included in the release/$tag"
 
-  if [[ $commits > 0 || $skip_empty_releases == "false" ]]; then
+  if [[ $commits > 0 || ($allow_empty_releases == "true" && $commits == 0) ]]; then
     git config user.name github-actions
     check_execution_ok
     git config user.email github-actions@github.com

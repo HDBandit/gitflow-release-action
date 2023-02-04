@@ -25,9 +25,9 @@ On the other hand, remember to enable `Read-Write` permissions for GithubActions
 
 **Optional** Branch name used to integrate feature branches. Default `develop`.
 
-## `skip_empty_releases`
+## `allow_empty_releases`
 
-**Optional** Skip releases branch with 0 commits ahead your main branch. Default `true`.
+**Optional** Allow releases branch with 0 commits ahead your main branch. Default `false`.
 
 ## Outputs
 
@@ -42,7 +42,7 @@ with:
   tag: 1.0.0
   main_branch: master
   develop_branch: develop
-  skip_empty_releases: true
+  allow_empty_releases: false
 ```
 
 For `start` a release
@@ -53,7 +53,7 @@ with:
   tag: 1.0.0
   main_branch: master
   develop_branch: develop
-  skip_empty_releases: true
+  allow_empty_releases: false
 ```
 
 For `finish` a release
@@ -64,5 +64,5 @@ with:
   tag: 1.0.0
   main_branch: master
   develop_branch: develop
-  skip_empty_releases: true
+  allow_empty_releases: false
 ```
