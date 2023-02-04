@@ -19,7 +19,7 @@ inputs:
   allow_empty_releases:
     description: Allow integrate releases with 0 commits ahead your main branch
     required: false
-    default: 'false'
+    default: "false"
 
 runs:
   using: docker
