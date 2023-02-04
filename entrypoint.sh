@@ -11,7 +11,7 @@ echo "Working directory is $(pwd)"
 if [ "$command" = start ] || [ "$command" = start_finish ]; then
   git checkout -f "$main_branch"
   git pull
-  git checkout -f -t -B "$develop_branch origin/$develop_branch"
+  git checkout -f -t -B "$develop_branch" origin/"$develop_branch"
 
   echo "Creating branch release ..."
   git checkout -b release/"$tag"
@@ -22,7 +22,7 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   commits=$(git log --no-merges --format='%H' master...release/$tag | wc -l)
   echo "$commits commits included in the release/$tag"
 
-  if (( commits > 0 )); then
+  if [[ $commits > 0 ]]; then
     git config user.name github-actions
     git config user.email github-actions@github.com
     git checkout "$main_branch"
