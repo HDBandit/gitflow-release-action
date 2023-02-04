@@ -5,6 +5,8 @@ tag=${INPUT_TAG}
 main_branch=${INPUT_MAIN_BRANCH}
 develop_branch=${INPUT_DEVELOP_BRANCH}
 
+echo "Executing gitflow release command=$command, tag=$tag, main_branch=$main_branch and develop_branch=$develop_branch"
+
 if [ "$command" = start ] || [ "$command" = start_finish ]; then
   git checkout -f "$main_branch"
   git pull
@@ -18,7 +20,7 @@ fi
 if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   commits=$(git log --no-merges --format='%H' master...release/$tag | wc -l)
 
-  if (( a > b )); then
+  if (( commits > 0 )); then
     git config user.name github-actions
     git config user.email github-actions@github.com
     git checkout "$main_branch"
