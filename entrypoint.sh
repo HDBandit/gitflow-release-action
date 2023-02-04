@@ -1,11 +1,9 @@
 #!/bin/sh
 
-set -e
-
-command=${INPUT_COMMAND}
-tag=${INPUT_TAG}
-main_branch=${INPUT_MAIN_BRANCH}
-develop_branch=${INPUT_DEVELOP_BRANCH}
+command="$1"
+tag="$2"
+main_branch="$3"
+develop_branch="$4"
 
 echo "Executing gitflow release command=$command, tag=$tag, main_branch=$main_branch and develop_branch=$develop_branch"
 echo "Working directory is $(pwd)"
@@ -22,6 +20,7 @@ fi
 
 if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   commits=$(git log --no-merges --format='%H' master...release/$tag | wc -l)
+  echo "$commits commits included in the release/$tag"
 
   if (( commits > 0 )); then
     git config user.name github-actions
