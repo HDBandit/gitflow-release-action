@@ -8,7 +8,7 @@ main_branch=${INPUT_MAIN_BRANCH}
 develop_branch=${INPUT_DEVELOP_BRANCH}
 
 echo "Executing gitflow release command=$command, tag=$tag, main_branch=$main_branch and develop_branch=$develop_branch"
-echo "Working directory is $pwd"
+echo "Working directory is $(pwd)"
 
 if [ "$command" = start ] || [ "$command" = start_finish ]; then
   git checkout -f "$main_branch"
