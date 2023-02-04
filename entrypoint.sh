@@ -13,27 +13,6 @@ check_execution_ok() {
     fi
 }
 
-echo "Executing gitflow release command=$command, tag=$tag, main_branch=$main_branch, develop_branch=$develop_branch, allow_empty_releases=$allow_empty_releases"
-echo "Working directory is $(pwd)"
-
-if [ "$command" = start ] || [ "$command" = start_finish ]; then
-  start_release
-fi
-
-if [ "$command" = finish ] || [ "$command" = start_finish ]; then
-  commits=$(git log --no-merges --format='%H' master...release/$tag | wc -l)
-  check_execution_ok
-  echo "$commits commits included in the release/$tag"
-
-  if [[ $commits > 0 ]]; then
-    finalize_release
-  else if [[ $allow_empty_releases == "true" ]]; then
-    finalize_release
-  else
-    echo "Sorry :( , you need to work more! Skipping release due to 0 commits found in release/$tag ahead $main_branch"
-  fi
-fi
-
 start_release() {
  git checkout -f "$main_branch"
  check_execution_ok
@@ -84,3 +63,24 @@ finalize_release() {
   check_execution_ok
   echo "Branch release/$tag deleted!"
 }
+
+echo "Executing gitflow release command=$command, tag=$tag, main_branch=$main_branch, develop_branch=$develop_branch, allow_empty_releases=$allow_empty_releases"
+echo "Working directory is $(pwd)"
+
+if [ "$command" = start ] || [ "$command" = start_finish ]; then
+  start_release
+fi
+
+if [ "$command" = finish ] || [ "$command" = start_finish ]; then
+  commits=$(git log --no-merges --format='%H' master...release/$tag | wc -l)
+  check_execution_ok
+  echo "$commits commits included in the release/$tag"
+
+  if [[ $commits > 0 ]]; then
+    finalize_release
+  elseif [[ $allow_empty_releases == "true" ]]; then
+    finalize_release
+  else
+    echo "Sorry :( , you need to work more! Skipping release due to 0 commits found in release/$tag ahead $main_branch"
+  fi
+fi
