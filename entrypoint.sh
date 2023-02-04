@@ -17,17 +17,7 @@ echo "Executing gitflow release command=$command, tag=$tag, main_branch=$main_br
 echo "Working directory is $(pwd)"
 
 if [ "$command" = start ] || [ "$command" = start_finish ]; then
-  git checkout -f "$main_branch"
-  check_execution_ok
-  git pull
-  check_execution_ok
-  git checkout -f -t -B "$develop_branch" origin/"$develop_branch"
-  check_execution_ok
-
-  echo "Creating branch release ..."
-  git checkout -b release/"$tag"
-  check_execution_ok
-  echo "Branch release created!"
+  start_release
 fi
 
 if [ "$command" = finish ] || [ "$command" = start_finish ]; then
@@ -36,41 +26,61 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   echo "$commits commits included in the release/$tag"
 
   if [[ $commits > 0 || ($allow_empty_releases == "true" && $commits == 0) ]]; then
-    git config user.name github-actions
-    check_execution_ok
-    git config user.email github-actions@github.com
-    check_execution_ok
-    git checkout "$main_branch"
-    check_execution_ok
-    git merge --no-ff release/"$tag"
-    check_execution_ok
-    git tag -a "$tag" -m "Release $tag"
-    check_execution_ok
-    git checkout "$develop_branch"
-    check_execution_ok
-    git merge --no-ff release/"$tag"
-    check_execution_ok
-    git fetch --tags origin
-    check_execution_ok
-    git merge "$tag"
-    check_execution_ok
-
-    echo "Pushing changes to remote ..."
-    git push origin "$main_branch"
-    check_execution_ok
-    git push origin "$develop_branch"
-    check_execution_ok
-    git push origin --tags
-    check_execution_ok
-    echo "Changes to remote pushed!"
-
-    echo "Deleting branch release/$tag ..."
-    git checkout "$develop_branch"
-    check_execution_ok
-    git branch -d release/"$tag"
-    check_execution_ok
-    echo "Branch release/$tag deleted!"
+    finalize_release
+  else if [[ $allow_empty_releases == "true" ]]; then
+    finalize_release
   else
     echo "Sorry :( , you need to work more! Skipping release due to 0 commits found in release/$tag ahead $main_branch"
   fi
 fi
+
+start_release() {
+ git checkout -f "$main_branch"
+ check_execution_ok
+ git pull
+ check_execution_ok
+ git checkout -f -t -B "$develop_branch" origin/"$develop_branch"
+ check_execution_ok
+
+ echo "Creating branch release ..."
+ git checkout -b release/"$tag"
+ check_execution_ok
+ echo "Branch release created!"
+}
+
+finalize_release() {
+  git config user.name github-actions
+  check_execution_ok
+  git config user.email github-actions@github.com
+  check_execution_ok
+  git checkout "$main_branch"
+  check_execution_ok
+  git merge --no-ff release/"$tag"
+  check_execution_ok
+  git tag -a "$tag" -m "Release $tag"
+  check_execution_ok
+  git checkout "$develop_branch"
+  check_execution_ok
+  git merge --no-ff release/"$tag"
+  check_execution_ok
+  git fetch --tags origin
+  check_execution_ok
+  git merge "$tag"
+  check_execution_ok
+
+  echo "Pushing changes to remote ..."
+  git push origin "$main_branch"
+  check_execution_ok
+  git push origin "$develop_branch"
+  check_execution_ok
+  git push origin --tags
+  check_execution_ok
+  echo "Changes to remote pushed!"
+
+  echo "Deleting branch release/$tag ..."
+  git checkout "$develop_branch"
+  check_execution_ok
+  git branch -d release/"$tag"
+  check_execution_ok
+  echo "Branch release/$tag deleted!"
+}

@@ -29,7 +29,7 @@ runs:
     - ${{ inputs.tag }}
     - ${{ inputs.main_branch }}
     - ${{ inputs.develop_branch }}
-    - ${{ inputs.skip_empty_releases }}
+    - ${{ inputs.allow_empty_releases }}
 branding:
   icon: 'award'
   color: 'green'
