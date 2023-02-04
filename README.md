@@ -1,7 +1,11 @@
 # Gitflow release action
 
-GitHub Action implementing the Gitflow release process. This GitHub Action needs a token with permissions to push to your main and develop branches.
+GitHub Action implementing the Gitflow release process. 
+
+## Prerequisites
+
 If you have configured Branch protections, you will need a token with permissions to bypass these protections.
+On the other hand, remember to enable `Read-Write` permissions for GithubActions in your repository.
 
 ## Inputs
 
@@ -21,6 +25,10 @@ If you have configured Branch protections, you will need a token with permission
 
 **Optional** Branch name used to integrate feature branches. Default `develop`.
 
+## `skip_empty_releases`
+
+**Optional** Skip releases branch with 0 commits ahead your main branch. Default `true`.
+
 ## Outputs
 
 No outputs
@@ -34,6 +42,7 @@ with:
   tag: 1.0.0
   main_branch: master
   develop_branch: develop
+  skip_empty_releases: true
 ```
 
 For `start` a release
@@ -44,6 +53,7 @@ with:
   tag: 1.0.0
   main_branch: master
   develop_branch: develop
+  skip_empty_releases: true
 ```
 
 For `finish` a release
@@ -54,4 +64,5 @@ with:
   tag: 1.0.0
   main_branch: master
   develop_branch: develop
+  skip_empty_releases: true
 ```
