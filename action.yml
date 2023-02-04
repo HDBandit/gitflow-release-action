@@ -28,3 +28,6 @@ runs:
     - ${{ inputs.message }}
     - ${{ inputs.main_branch }}
     - ${{ inputs.develop_branch }}
+branding:
+  icon: 'award'
+  color: 'green'
