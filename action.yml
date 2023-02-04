@@ -16,6 +16,10 @@ inputs:
     description: Branch serving as an integration branch for features
     required: false
     default: develop
+  skip_empty_releases:
+    description: Skip integrate releases with 0 commits ahead your main branch
+    required: false
+    default: "true"
 
 runs:
   using: docker
@@ -25,6 +29,7 @@ runs:
     - ${{ inputs.tag }}
     - ${{ inputs.main_branch }}
     - ${{ inputs.develop_branch }}
+    - ${{ inputs.skip_empty_releases }}
 branding:
   icon: 'award'
   color: 'green'

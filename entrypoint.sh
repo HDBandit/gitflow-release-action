@@ -4,8 +4,9 @@ command="$1"
 tag="$2"
 main_branch="$3"
 develop_branch="$4"
+skip_empty_releases="$5"
 
-echo "Executing gitflow release command=$command, tag=$tag, main_branch=$main_branch and develop_branch=$develop_branch"
+echo "Executing gitflow release command=$command, tag=$tag, main_branch=$main_branch, develop_branch=$develop_branch, skip_empty_releases=$skip_empty_releases"
 echo "Working directory is $(pwd)"
 
 if [ "$command" = start ] || [ "$command" = start_finish ]; then
@@ -22,7 +23,7 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   commits=$(git log --no-merges --format='%H' master...release/$tag | wc -l)
   echo "$commits commits included in the release/$tag"
 
-  if [[ $commits > 0 ]]; then
+  if [[ $commits > 0 ] || [ $skip_empty_releases == "false" ]; then
     git config user.name github-actions
     git config user.email github-actions@github.com
     git checkout "$main_branch"
