@@ -3,14 +3,11 @@ description: Release following Gitflow branching model
 author: Gerard Vico
 inputs:
   command:
-    description: Supported commands are [start|finish]
+    description: Supported commands are [start|finish|start_finish]
     required: true
   tag:
     description: A Git tag name.
     required: true
-  message:
-    description: A message for the Git tag.
-    required: false
   main_branch:
     description: Branch storing the official release history
     required: false
@@ -24,8 +21,8 @@ runs:
   using: docker
   image: Dockerfile
   args:
+    - ${{ inputs.command }}
     - ${{ inputs.tag }}
-    - ${{ inputs.message }}
     - ${{ inputs.main_branch }}
     - ${{ inputs.develop_branch }}
 branding:

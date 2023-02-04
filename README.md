@@ -26,10 +26,31 @@ If you have configured Branch protections, you will need a token with permission
 No outputs
 
 ## Example usage
+For `start` and `finish` a release in one command
 ```yml
-uses: actions/gitflow-release-action@v1
+uses: HDBandit/gitflow-release-action@1.0.1
 with:
   command: start_finish
+  tag: 1.0.0
+  main_branch: master
+  develop_branch: develop
+```
+
+For `start` a release
+```yml
+uses: HDBandit/gitflow-release-action@1.0.1
+with:
+  command: start
+  tag: 1.0.0
+  main_branch: master
+  develop_branch: develop
+```
+
+For `finish` a release
+```yml
+uses: HDBandit/gitflow-release-action@1.0.1
+with:
+  command: finish
   tag: 1.0.0
   main_branch: master
   develop_branch: develop
