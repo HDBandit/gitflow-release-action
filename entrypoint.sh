@@ -25,7 +25,7 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   check_execution_ok
   echo "$commits commits included in the release/$tag"
 
-  if [[ $commits > 0 || ($allow_empty_releases == "true" && $commits == 0) ]]; then
+  if [[ $commits > 0 ]]; then
     finalize_release
   else if [[ $allow_empty_releases == "true" ]]; then
     finalize_release
