@@ -74,10 +74,12 @@ fi
 if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   commits=$(git log --no-merges --format='%H' master...release/$tag | wc -l)
   check_execution_ok
-  echo "$commits commits included in the release/$tag"
 
-  if [[ $commits > 0 ]]; then
-    echo "Release with $commits included"
+  commitsInt=$(($commits + 0))
+  echo "$commitsInt commits included in the release/$tag"
+
+  if [[ $commitsInt > 0 ]]; then
+    echo "Release with $commitsInt commits included"
     finalize_release
   elif [[ "$allow_empty_releases" -eq "true" ]]; then
     echo "Empty release! But allow_empty_releases=true"
