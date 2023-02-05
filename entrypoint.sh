@@ -78,7 +78,7 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   commitsInt=$(($commits + 0))
   echo "$commitsInt commits included in the release/$tag"
 
-  if [[ $commitsInt > 0 ]]; then
+  if [[ $commitsInt -ge 1 ]]; then
     echo "Release with $commitsInt commits included"
     finalize_release
   elif [[ "$allow_empty_releases" -eq "true" ]]; then
