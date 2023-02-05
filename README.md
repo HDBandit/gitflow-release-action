@@ -33,7 +33,7 @@ On the other hand, remember to enable `Read-Write` permissions for GithubActions
 
 ## `result`
 
-It returns `success` or `fail`.
+It returns `success`, `fail` or `skipped` (in case there are 0 commits and `allow_empty_releases` is false).
 
 ## `commits`
 

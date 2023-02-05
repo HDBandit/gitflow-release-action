@@ -85,10 +85,12 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   if [[ $commitsInt -ge 1 ]]; then
     echo "Release with $commitsInt commits included"
     finalize_release
-  elif [[ "$allow_empty_releases" -eq "true" ]]; then
+  elif [ "$allow_empty_releases" = "true" ]; then
     echo "Empty release! But allow_empty_releases=true"
     finalize_release
   else
+    echo "result=skipped" >> $GITHUB_OUTPUT
+    echo "commits=0" >> $GITHUB_OUTPUT
     echo "Sorry :( , you need to work more! Skipping release due to 0 commits found in release/$tag ahead $main_branch"
   fi
 fi
