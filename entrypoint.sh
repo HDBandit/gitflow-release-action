@@ -2,9 +2,11 @@
 
 command="$1"
 tag="$2"
-main_branch="$3"
-develop_branch="$4"
-allow_empty_releases="$5"
+git_user="$3"
+git_email="$4"
+main_branch="$5"
+develop_branch="$6"
+allow_empty_releases="$7"
 
 check_execution_ok() {
   if [ $? -ne 0 ]
@@ -29,10 +31,10 @@ start_release() {
 }
 
 finalize_release() {
-#  git config user.name github-actions
-#  check_execution_ok
-#  git config user.email github-actions@github.com
-#  check_execution_ok
+  git config user.name "$git_user"
+  check_execution_ok
+  git config user.email "$git_email"
+  check_execution_ok
   git checkout "$main_branch"
   check_execution_ok
   git merge --no-ff release/"$tag"
@@ -68,7 +70,7 @@ finalize_release() {
   echo "commits=$commits" >> $GITHUB_OUTPUT
 }
 
-echo "Executing gitflow release command=$command, tag=$tag, main_branch=$main_branch, develop_branch=$develop_branch, allow_empty_releases=$allow_empty_releases"
+echo "Executing gitflow release command=$command, tag=$tag, git_users=$git_user, git_email=$git_email, main_branch=$main_branch, develop_branch=$develop_branch, allow_empty_releases=$allow_empty_releases"
 echo "Working directory is $(pwd)"
 
 if [ "$command" = start ] || [ "$command" = start_finish ]; then

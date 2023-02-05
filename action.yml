@@ -8,6 +8,14 @@ inputs:
   tag:
     description: A Git tag name.
     required: true
+  git_user:
+    description: Git committer identify.
+    required: false
+    default: github-actions
+  git_email:
+    description: Git committer email.
+    required: false
+    default: github-actions@github.com
   main_branch:
     description: Branch storing the official release history
     required: false
@@ -27,6 +35,8 @@ runs:
   args:
     - ${{ inputs.command }}
     - ${{ inputs.tag }}
+    - ${{ inputs.git_user }}
+    - ${{ inputs.git_email }}
     - ${{ inputs.main_branch }}
     - ${{ inputs.develop_branch }}
     - ${{ inputs.allow_empty_releases }}
