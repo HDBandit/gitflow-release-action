@@ -31,7 +31,13 @@ On the other hand, remember to enable `Read-Write` permissions for GithubActions
 
 ## Outputs
 
-No outputs
+## `result`
+
+It returns `success` or `fail`.
+
+## `commits`
+
+It returns the number of commits included in the release in case of ending with a success.
 
 ## Example usage
 For `start` and `finish` a release in one command

@@ -9,6 +9,7 @@ allow_empty_releases="$5"
 check_execution_ok() {
   if [ $? -ne 0 ]
     then
+      echo "result=fail" >> $GITHUB_OUTPUT
       exit 1
     fi
 }
@@ -62,6 +63,9 @@ finalize_release() {
   git branch -d release/"$tag"
   check_execution_ok
   echo "Branch release/$tag deleted!"
+
+  echo "result=success" >> $GITHUB_OUTPUT
+  echo "commits=$commits" >> $GITHUB_OUTPUT
 }
 
 echo "Executing gitflow release command=$command, tag=$tag, main_branch=$main_branch, develop_branch=$develop_branch, allow_empty_releases=$allow_empty_releases"
