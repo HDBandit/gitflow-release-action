@@ -77,8 +77,10 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   echo "$commits commits included in the release/$tag"
 
   if [[ $commits > 0 ]]; then
+    echo "Release with $commits included"
     finalize_release
   elif [[ "$allow_empty_releases" -eq "true" ]]; then
+    echo "Empty release! But allow_empty_releases=true"
     finalize_release
   else
     echo "Sorry :( , you need to work more! Skipping release due to 0 commits found in release/$tag ahead $main_branch"
