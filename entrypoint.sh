@@ -29,10 +29,10 @@ start_release() {
 }
 
 finalize_release() {
-  git config user.name github-actions
-  check_execution_ok
-  git config user.email github-actions@github.com
-  check_execution_ok
+#  git config user.name github-actions
+#  check_execution_ok
+#  git config user.email github-actions@github.com
+#  check_execution_ok
   git checkout "$main_branch"
   check_execution_ok
   git merge --no-ff release/"$tag"
