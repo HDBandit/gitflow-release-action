@@ -4,8 +4,12 @@ GitHub Action implementing the Gitflow release process.
 
 ## Prerequisites
 
-If you have configured Branch protections, you will need a token with permissions to bypass these protections.
-On the other hand, remember to enable `Read-Write` permissions for GithubActions in your repository.
+If you have configured Branch protections, you will need a token with permissions to bypass these protections. In this
+[article](https://michaelheap.com/ultimate-guide-github-actions-authentication/) is well explained how to authenticate a GithubAction and obtain an installation token.
+On the other hand, if you are using a GithubApp as committer (`git_user` and `git_email`), remember the user will be the `app name` and the email `<app_name>@users.noreply.github.com`.
+For more details read the official documentation [here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address)
+
+Finally, remember to enable `Read-Write` permissions for GithubActions in your repository.
 
 ## Inputs
 
@@ -16,6 +20,14 @@ On the other hand, remember to enable `Read-Write` permissions for GithubActions
 ## `tag`
 
 **Required** Label to use for releasing.
+
+## `git_user`
+
+**Optional** Git committer identity.
+
+## `git_email`
+
+**Optional** Git committer email.
 
 ## `main_branch`
 
@@ -46,9 +58,11 @@ uses: HDBandit/gitflow-release-action@1.0.1
 with:
   command: start_finish
   tag: 1.0.0
-  main_branch: master
-  develop_branch: develop
-  allow_empty_releases: false
+  git_user: github-actions # Optional
+  git_email: github-actions@github.com # Optional
+  main_branch: master # Optional
+  develop_branch: develop # Optional
+  allow_empty_releases: false # Optional
 ```
 
 For `start` a release
@@ -57,9 +71,11 @@ uses: HDBandit/gitflow-release-action@1.0.1
 with:
   command: start
   tag: 1.0.0
-  main_branch: master
-  develop_branch: develop
-  allow_empty_releases: false
+  git_user: github-actions # Optional
+  git_email: github-actions@github.com # Optional
+  main_branch: master # Optional
+  develop_branch: develop # Optional
+  allow_empty_releases: false # Optional
 ```
 
 For `finish` a release
@@ -68,7 +84,9 @@ uses: HDBandit/gitflow-release-action@1.0.1
 with:
   command: finish
   tag: 1.0.0
-  main_branch: master
-  develop_branch: develop
-  allow_empty_releases: false
+  git_user: github-actions # Optional
+  git_email: github-actions@github.com # Optional
+  main_branch: master # Optional
+  develop_branch: develop # Optional
+  allow_empty_releases: false # Optional
 ```
