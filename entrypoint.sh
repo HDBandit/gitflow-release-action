@@ -84,7 +84,7 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
 
   commitsInt=$(($commits + 0))
 
-  if [[ "$ignore_commits_from_author" ne "include_all_authors" ]]; then
+  if [ "$ignore_commits_from_author" = "include_all_authors" ]; then
     excludeCommits=$(git log --author $ignore_commits_from_author --no-merges --format='%H' master...release/$tag | wc -l)
     excludeCommitsInt=$(($excludeCommits + 0))
     echo "$excludeCommitsInt commits excluded (author=$ignore_commits_from_author) from the release/$tag"
