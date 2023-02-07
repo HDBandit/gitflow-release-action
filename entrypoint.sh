@@ -79,14 +79,22 @@ if [ "$command" = start ] || [ "$command" = start_finish ]; then
 fi
 
 if [ "$command" = finish ] || [ "$command" = start_finish ]; then
+  allCommitsMsg=$(git log --no-merges --format='%H' master...release/$tag)
   commits=$(git log --no-merges --format='%H' master...release/$tag | wc -l)
   check_execution_ok
 
   commitsInt=$(($commits + 0))
 
-  if [ "$ignore_commits_from_author" = "include_all_authors" ]; then
+  echo "All new commits detected"
+  echo "$allCommitsMsg"
+
+  if [ "$ignore_commits_from_author" != "include_all_authors" ]; then
     excludeCommits=$(git log --author $ignore_commits_from_author --no-merges --format='%H' master...release/$tag | wc -l)
     excludeCommitsInt=$(($excludeCommits + 0))
+
+    commitsToExcludeMsg=$(git log --author $ignore_commits_from_author --no-merges --format='%H' master...release/$tag)
+    echo "Detail commits to exclude by $ignore_commits_from_author"
+    echo "$commitsToExcludeMsg"
     echo "$excludeCommitsInt commits excluded (author=$ignore_commits_from_author) from the release/$tag"
 
     commitsInt=$(($commitsInt - $excludeCommits))
