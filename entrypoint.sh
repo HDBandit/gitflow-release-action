@@ -79,7 +79,7 @@ if [ "$command" = start ] || [ "$command" = start_finish ]; then
 fi
 
 if [ "$command" = finish ] || [ "$command" = start_finish ]; then
-  allCommitsMsg=$(git log --oneline --no-merges --format='%H' master...release/$tag)
+  allCommitsMsg=$(git log --oneline --no-merges master...release/$tag)
   commits=$(git log --oneline --no-merges --format='%H' master...release/$tag | wc -l)
   check_execution_ok
 
@@ -92,7 +92,7 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
     excludeCommits=$(git log --oneline --author $ignore_commits_from_author --no-merges --format='%H' master...release/$tag | wc -l)
     excludeCommitsInt=$(($excludeCommits + 0))
 
-    commitsToExcludeMsg=$(git log --oneline --author $ignore_commits_from_author --no-merges --format='%H' master...release/$tag)
+    commitsToExcludeMsg=$(git log --oneline --author $ignore_commits_from_author --no-merges master...release/$tag)
     echo "Detail commits to exclude by $ignore_commits_from_author"
     echo "$commitsToExcludeMsg"
     echo "$excludeCommitsInt commits excluded (author=$ignore_commits_from_author) from the release/$tag"
