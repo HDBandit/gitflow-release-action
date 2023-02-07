@@ -41,6 +41,10 @@ Finally, remember to enable `Read-Write` permissions for GithubActions in your r
 
 **Optional** Allow releases branch with 0 commits ahead your main branch. Default `false`.
 
+## `ignore_commits_from_author`
+
+**Optional** Ignore commits from a specific author. Default `include_all_authors`.
+
 ## Outputs
 
 ## `result`
@@ -63,6 +67,7 @@ with:
   main_branch: master # Optional
   develop_branch: develop # Optional
   allow_empty_releases: false # Optional
+  ignore_commits_from_author: johndoe # Optional
 ```
 
 For `start` a release
@@ -76,6 +81,7 @@ with:
   main_branch: master # Optional
   develop_branch: develop # Optional
   allow_empty_releases: false # Optional
+  ignore_commits_from_author: johndoe # Optional
 ```
 
 For `finish` a release
@@ -89,4 +95,5 @@ with:
   main_branch: master # Optional
   develop_branch: develop # Optional
   allow_empty_releases: false # Optional
+  ignore_commits_from_author: johndoe # Optional
 ```

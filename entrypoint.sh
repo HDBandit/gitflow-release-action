@@ -7,6 +7,7 @@ git_email="$4"
 main_branch="$5"
 develop_branch="$6"
 allow_empty_releases="$7"
+ignore_commits_from_author="$8"
 
 check_execution_ok() {
   if [ $? -ne 0 ]
@@ -70,7 +71,7 @@ finalize_release() {
   echo "commits=$commits" >> $GITHUB_OUTPUT
 }
 
-echo "Executing gitflow release command=$command, tag=$tag, git_users=$git_user, git_email=$git_email, main_branch=$main_branch, develop_branch=$develop_branch, allow_empty_releases=$allow_empty_releases"
+echo "Executing gitflow release command=$command, tag=$tag, git_users=$git_user, git_email=$git_email, main_branch=$main_branch, develop_branch=$develop_branch, allow_empty_releases=$allow_empty_releases, ignore_commits_from_author=$ignore_commits_from_author"
 echo "Working directory is $(pwd)"
 
 if [ "$command" = start ] || [ "$command" = start_finish ]; then
@@ -82,6 +83,15 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   check_execution_ok
 
   commitsInt=$(($commits + 0))
+
+  if [[ "$ignore_commits_from_author" ne "include_all_authors" ]]; then
+    excludeCommits=$(git log --author $ignore_commits_from_author --no-merges --format='%H' master...release/$tag | wc -l)
+    excludeCommitsInt=$(($excludeCommits + 0))
+    echo "$excludeCommitsInt commits excluded (author=$ignore_commits_from_author) from the release/$tag"
+
+    commitsInt=$(($commitsInt - $excludeCommits))
+  fi
+
   echo "$commitsInt commits included in the release/$tag"
 
   if [[ $commitsInt -ge 1 ]]; then

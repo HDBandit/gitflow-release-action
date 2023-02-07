@@ -28,6 +28,10 @@ inputs:
     description: Allow integrate releases with 0 commits ahead your main branch
     required: false
     default: "false"
+  ignore_commits_from_author:
+    description: Author to ignore from the commits count
+    required: false
+    default: include_all_authors
 
 runs:
   using: docker
@@ -40,6 +44,7 @@ runs:
     - ${{ inputs.main_branch }}
     - ${{ inputs.develop_branch }}
     - ${{ inputs.allow_empty_releases }}
+    - ${{ inputs.ignore_commits_from_author }}
 branding:
   icon: 'award'
   color: 'green'
