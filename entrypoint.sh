@@ -89,7 +89,7 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   echo "All new commits detected"
   echo "$allCommitsMsg"
 
-  if [ "$ignore_commits_from_author" != "include_all_authors" && "$ignore_commits_grep" != "include_all_messages" ]; then
+  if [ "$ignore_commits_from_author" != "include_all_authors" ] && [ "$ignore_commits_grep" != "include_all_messages" ]; then
     excludeCommits=$(git log --oneline --author $ignore_commits_from_author --invert-grep --grep="$ignore_commits_grep" --no-merges --format='%H' master...release/$tag | wc -l)
     excludeCommitsInt=$(($excludeCommits + 0))
 
@@ -99,7 +99,7 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
     echo "$excludeCommitsInt commits excluded (author=$ignore_commits_from_author and invert-grep=$ignore_commits_grep) from the release/$tag"
 
     commitsInt=$(($commitsInt - $excludeCommits))
-  elif [ "$ignore_commits_from_author" != "include_all_authors" && "$ignore_commits_grep" = "include_all_messages" ]; then
+  elif [ "$ignore_commits_from_author" != "include_all_authors" ] && [ "$ignore_commits_grep" = "include_all_messages" ]; then
     excludeCommits=$(git log --oneline --author $ignore_commits_from_author --no-merges --format='%H' master...release/$tag | wc -l)
     excludeCommitsInt=$(($excludeCommits + 0))
 
@@ -109,7 +109,7 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
     echo "$excludeCommitsInt commits excluded (author=$ignore_commits_from_author) from the release/$tag"
 
     commitsInt=$(($commitsInt - $excludeCommits))
-  elif [ "$ignore_commits_from_author" = "include_all_authors" && "$ignore_commits_grep" != "include_all_messages" ]; then
+  elif [ "$ignore_commits_from_author" = "include_all_authors" ] && [ "$ignore_commits_grep" != "include_all_messages" ]; then
       excludeCommits=$(git log --oneline --invert-grep --grep="$ignore_commits_grep" --no-merges --format='%H' master...release/$tag | wc -l)
       excludeCommitsInt=$(($excludeCommits + 0))
 
