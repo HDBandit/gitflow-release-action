@@ -45,6 +45,10 @@ Finally, remember to enable `Read-Write` permissions for GithubActions in your r
 
 **Optional** Ignore commits from a specific author. Default `include_all_authors`.
 
+## `ignore_commits_grep`
+
+**Optional** Ignore commits with specific message content. Default `include_all_messages`.
+
 ## Outputs
 
 ## `result`
@@ -68,6 +72,7 @@ with:
   develop_branch: develop # Optional
   allow_empty_releases: false # Optional
   ignore_commits_from_author: johndoe # Optional
+  ignore_commits_grep: [skip] # Optional
 ```
 
 For `start` a release
@@ -82,6 +87,7 @@ with:
   develop_branch: develop # Optional
   allow_empty_releases: false # Optional
   ignore_commits_from_author: johndoe # Optional
+  ignore_commits_grep: [skip] # Optional
 ```
 
 For `finish` a release
@@ -96,4 +102,5 @@ with:
   develop_branch: develop # Optional
   allow_empty_releases: false # Optional
   ignore_commits_from_author: johndoe # Optional
+  ignore_commits_grep: [skip] # Optional
 ```

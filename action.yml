@@ -32,6 +32,10 @@ inputs:
     description: Author to ignore from the commits count
     required: false
     default: include_all_authors
+  ignore_commits_grep:
+    description: Commits to ignore based on given message content
+    required: false
+    default: include_all_messages
 
 runs:
   using: docker
@@ -45,6 +49,7 @@ runs:
     - ${{ inputs.develop_branch }}
     - ${{ inputs.allow_empty_releases }}
     - ${{ inputs.ignore_commits_from_author }}
+    - ${{ inputs.ignore_commits_grep }}
 branding:
   icon: 'award'
   color: 'green'
