@@ -80,8 +80,8 @@ if [ "$command" = start ] || [ "$command" = start_finish ]; then
 fi
 
 if [ "$command" = finish ] || [ "$command" = start_finish ]; then
-  allCommitsMsg=$(git log --oneline --no-merges master...release/$tag)
-  commits=$(git log --oneline --no-merges --format='%H' master...release/$tag | wc -l)
+  allCommitsMsg=$(git log --oneline --no-merges $main_branch...release/$tag)
+  commits=$(git log --oneline --no-merges --format='%H' $main_branch...release/$tag | wc -l)
   check_execution_ok
 
   commitsInt=$(($commits + 0))
@@ -90,30 +90,30 @@ if [ "$command" = finish ] || [ "$command" = start_finish ]; then
   echo "$allCommitsMsg"
 
   if [ "$ignore_commits_from_author" != "include_all_authors" ] && [ "$ignore_commits_grep" != "include_all_messages" ]; then
-    excludeCommits=$(git log --oneline --author $ignore_commits_from_author --grep="$ignore_commits_grep" --no-merges --format='%H' master...release/$tag | wc -l)
+    excludeCommits=$(git log --oneline --author $ignore_commits_from_author --grep="$ignore_commits_grep" --no-merges --format='%H' $main_branch...release/$tag | wc -l)
     excludeCommitsInt=$(($excludeCommits + 0))
 
-    commitsToExcludeMsg=$(git log --oneline --author $ignore_commits_from_author --grep="$ignore_commits_grep" --no-merges master...release/$tag)
+    commitsToExcludeMsg=$(git log --oneline --author $ignore_commits_from_author --grep="$ignore_commits_grep" --no-merges $main_branch...release/$tag)
     echo "Detail commits to exclude by $ignore_commits_from_author"
     echo "$commitsToExcludeMsg"
     echo "$excludeCommitsInt commits excluded (author=$ignore_commits_from_author and grep=$ignore_commits_grep) from the release/$tag"
 
     commitsInt=$(($commitsInt - $excludeCommits))
   elif [ "$ignore_commits_from_author" != "include_all_authors" ] && [ "$ignore_commits_grep" = "include_all_messages" ]; then
-    excludeCommits=$(git log --oneline --author $ignore_commits_from_author --no-merges --format='%H' master...release/$tag | wc -l)
+    excludeCommits=$(git log --oneline --author $ignore_commits_from_author --no-merges --format='%H' $main_branch...release/$tag | wc -l)
     excludeCommitsInt=$(($excludeCommits + 0))
 
-    commitsToExcludeMsg=$(git log --oneline --author $ignore_commits_from_author --no-merges master...release/$tag)
+    commitsToExcludeMsg=$(git log --oneline --author $ignore_commits_from_author --no-merges $main_branch...release/$tag)
     echo "Detail commits to exclude by $ignore_commits_from_author"
     echo "$commitsToExcludeMsg"
     echo "$excludeCommitsInt commits excluded (author=$ignore_commits_from_author) from the release/$tag"
 
     commitsInt=$(($commitsInt - $excludeCommits))
   elif [ "$ignore_commits_from_author" = "include_all_authors" ] && [ "$ignore_commits_grep" != "include_all_messages" ]; then
-      excludeCommits=$(git log --oneline --grep="$ignore_commits_grep" --no-merges --format='%H' master...release/$tag | wc -l)
+      excludeCommits=$(git log --oneline --grep="$ignore_commits_grep" --no-merges --format='%H' $main_branch...release/$tag | wc -l)
       excludeCommitsInt=$(($excludeCommits + 0))
 
-      commitsToExcludeMsg=$(git log --oneline --grep="$ignore_commits_grep" --no-merges master...release/$tag)
+      commitsToExcludeMsg=$(git log --oneline --grep="$ignore_commits_grep" --no-merges $main_branch...release/$tag)
       echo "Detail commits to exclude by $ignore_commits_grep"
       echo "$commitsToExcludeMsg"
       echo "$excludeCommitsInt commits excluded (grep=$ignore_commits_grep) from the release/$tag"
